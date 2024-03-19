@@ -15,6 +15,27 @@
 만들 수 있는 팀의 최대 개수을 출력하면 된다.
 '''
 import sys
+import math
 N,M,K=map(int,sys.stdin.readline().split())
 
+
+teams=min(N//2,M)
+
+
+tmp_N=N-2*teams
+tmp_M=M-teams
+
+
+remain=tmp_M+tmp_N
+if remain>=K:
+    print(teams)
+    
+else:
+    K=K-remain
+
+    teams=teams-math.ceil(K/3)
+    if teams<=0:
+        teams=0
+    
+    print(teams)
 
