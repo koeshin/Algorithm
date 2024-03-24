@@ -36,19 +36,11 @@ dx=[0,1]
 dy=[1,0]
 start=[1,1]
 end=[size,size]
-# 0번 인덱스는 아래 이동 1번 인덱스는 오른쪽 이동
-# move_1=[] # 첫 이동 시 아래 이동 위치
-# move_2=[] # 찻 이동시 오른쪽 이동 위치
-
-# #처음 움직임
-# steps=map_of_games[0][0]
-# move_1=[start[0]+steps*dy[0],start[1]]
-# move_2=[start[0],start[1]+steps*dx[1]]
 
 
 #업데이트를 위한 위치를 담는 리스트 move_1의 아래 오른쪽 move_2의 아래 오른쪽 순으로 리스트에 담음
 # 만약 업데이트가 필요 없다면 None으로 대체
-update=[[1,1]]
+update=[start]
 
 # update 길이가 1일 떄는 for 문에 작동 안함
 
@@ -63,9 +55,8 @@ while(update):
         # print("tmp[0]",tmp[0])
         # print("tmp[1]",tmp[1])
         steps=map_of_games[tmp[0]-1][tmp[1]-1]
-        # if tmp[0]+steps>size and tmp[1]+steps>size:
-        #     del update[0]
-        #     continue
+        if steps==0:
+            continue
         
         if tmp[0]+steps<=size and tmp[1]+steps<=size: #둘 다 업데이트
             update_step=[tmp[0]+dy[1],tmp[1]+steps*dx[1]]
@@ -90,4 +81,5 @@ while(update):
             # del update[0]
 
 print("Hing")
+
 
