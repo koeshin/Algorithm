@@ -32,6 +32,8 @@ for i in range(size):
 
 
 #아래, 오른 순서
+# 아래는 틀린 풀이
+'''
 dx=[0,1]
 dy=[1,0]
 start=[1,1]
@@ -81,5 +83,9 @@ while(update):
             # del update[0]
 
 print("Hing")
+'''
 
+
+
+# BFS 풀이  큐를 이용해서 만들고 간 곳은 반드시 갔다고 표시
 
