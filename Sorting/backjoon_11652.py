@@ -19,7 +19,7 @@ N=int(sys.stdin.readline().strip())
 dict={}
 
 for i in range(N):
-    key=sys.stdin.readline().strip()
+    key=int(sys.stdin.readline().strip())  # key 값을 정수 타입으로 저장해야함. 문자열 타입으로 저장하면 문자열 기준으로 정렬됨.
     if key not in dict:
         dict[key]=1
     else:
