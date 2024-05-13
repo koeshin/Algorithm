@@ -1,96 +1,58 @@
 import sys
 
 
-input
-global maps
-maps=[]
-blanks=[]
-
-
-for i in range(9):
-    tmp=list(map(int,sys.stdin.readline().strip().split()))
-    
-    maps.append(tmp)
-    for j in range(9):
-        if tmp[j] == 0:
-            blanks.append([i,j])
+def read_puzzle():
+    maps = [[int(x) for x in sys.stdin.readline().strip().split()] for _ in range(9)]
+    blanks = [(i, j) for i in range(9) for j in range(9) if maps[i][j] == 0]
+    return maps, blanks
 # print("blanks:", blanks)        
             
-def check_row(dict, row):
+def check(row,column,maps,num):  # 하나의 값만 컴증 -> 불필요한 검증 삭제
     
-    for i in range(9):
-        if maps[row][i] in dict.keys():
-            del dict[maps[row][i]]
-            
-    return dict
-
-def check_column(dict, column):
-    for i in range(9):
-        if maps[i][column] in dict.keys():
-            del dict[maps[i][column]]
-            
-    return dict
-
-def check_box(dict,row,col):
+    dict={num:0}
+    box_row=row//3
+    box_col=column//3
     
+    # col&row 확인
+    for i in range(9):
+        if maps[row][i]== num or maps[i][column]==num:
+            return False
+    # 3*3 박스 확인 
     for i in range(3):
         for j in range(3):
-            if maps[row+i][col+j] in dict.keys():
-                del dict[maps[row+i][col+j]]
+            if maps[3*box_row+i][3*box_col+j] ==num:
+                # print("col,row:",row+i,col+j)
+                return False
     
-    return dict
+    return True
 
 
-global result
-result=[]
-def dfs(blank,idx):
-    global result,maps
+
+def dfs(maps,blank,idx):  # 시간 초과가 계속 발생
     
-    if idx==len(blank):
-        
-        for i in range(9):
-            for j in range(9):
-                print(maps[i][j],end=' ')
-            print('\n')   
+    if idx == len(blanks):
+        # Print the solution
+        for row in maps:
+            print(*row, sep=' ')
+       
         exit(0)
         
-    dict={1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0}
+
     row,column=blank[idx]
-    print("row and col:",row,column)
-    print(maps)
+    # print("row and col:",row,column)
+    # print(maps)
     
-    dict=check_row(dict,row)
-    if len(dict)==1:
-        k=list(dict.keys())[0]
-        maps[row][column]=k
-        dfs(blank,idx+1)
-    elif len(dict)==0:
+    for i in range(1,10):
+        flag=check(row,column,maps,i)
+        if flag ==False:
+            continue
+        maps[row][column]=i
+        dfs(maps,blank,idx+1)
         maps[row][column]=0
-        return
-    
-    dict=check_column(dict,column)
-    # print(dict)
-    if len(dict)==1:
-        k=list(dict.keys())[0]
-        maps[row][column]=k
-        dfs(blank,idx+1)
 
-    elif len(dict)==0:
-        maps[row][column]=0
-        return
-    dict=check_box(dict,row//3,column//3)
-    
-    if len(dict)==1:
-        k=list(dict.keys())[0]
-        maps[row][column]=k
-        dfs(blank,idx+1)
-    elif len(dict)==0:
-        maps[row][column]=0
-        return
-    print("dict:",dict)
-    for key in dict.keys():
-        maps[row][column]= key
-        dfs(blank,idx+1)
+
     return 
+if __name__ == "__main__":
+    maps, blanks = read_puzzle()
+    dfs(maps, blanks, 0)
 
-dfs(blanks,0)
