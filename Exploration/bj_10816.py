@@ -14,29 +14,28 @@
 
 import sys
 N=int(sys.stdin.readline())
-cards=list(map(int,sys.stdin.readline().strip().split()))
+cards=list(map(int,sys.stdin.readline().strip().split()))  # 카드 받기
 
-len_find=int(sys.stdin.readline())
-find_nums=list(map(int,sys.stdin.readline().strip().split()))
-dict = {num: 0 for num in find_nums}
+len_find=int(sys.stdin.readline())  # 찾을 숫자 개수 
+find_nums=list(map(int,sys.stdin.readline().strip().split())) # 찾을 숫자들
+dict = {num: 0 for num in find_nums} #  각 숫자의 카드가 몇 개 있는지 확인을 위한 딕셔너리
 
             
 for i in range(0,len(cards),2):
-    if len(cards)!=1 and i == len(cards)-1:
+    if len(cards)!=1 and i == len(cards)-1:  # 카드 개수가 1개 보다 많고, i가 마지막 카드 인덱스면 탈출(두 개씩 봐서 탈출문 만듬)
         break
-    n1=cards[i]
+    n1=cards[i]    # 첫번째 카드 확인
     
     if n1 in dict.keys():
-        dict[n1]+=1
-    if i+1<=len(cards)-1:
+        dict[n1]+=1   # 각 숫자에 맞게 딕셔너리 값 +1
+    if i+1<=len(cards)-1:  # 두 번째 카드 확인
         n2=(cards[i+1])
         if n2 in dict.keys():
-            dict[n2]+=1
+            dict[n2]+=1  # 마찬가지로 각 숫자에 딕셔너리  값 +1 
             
-# for num in find_nums:
-#     print(dict[num], end=' ')
-# for value in dict.values():
-#     print(value,end=' ')
+# for num in find_nums:       
+#     print(dict[num], end=' ')   # 찾는 카드 숫자를 돌면서 딕서너리에서 찾아서 출력
+
 
 
 
