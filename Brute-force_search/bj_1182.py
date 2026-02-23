@@ -22,6 +22,24 @@ def solution(idx,sum_):
 
 
 
-solution(0,0)
+# solution(0,0)
 
-print(cnt)
+def sol2(numbers):
+
+    partial_list=[0]
+
+    for i in numbers:
+        tmp_list=partial_list.copy()
+        for j in tmp_list:
+            partial_list.append(j+i)
+    cnt=0
+    for num in partial_list:
+        if num==S:
+            cnt+=1
+    if S==0:
+        cnt-=1
+    return cnt
+
+
+
+print(sol2(numbers))
